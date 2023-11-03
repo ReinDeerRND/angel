@@ -1,4 +1,5 @@
 # angel-messanger
+Vue 3, Typescript, Vuex, vue-router
 
 ## Project setup
 ```
