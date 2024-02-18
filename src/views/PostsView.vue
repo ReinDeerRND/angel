@@ -1,19 +1,16 @@
 <template>
   <div class="home">
     <h2> POSTS</h2>
-
     <div v-for="post in filteredPosts" :key="post.id" class="post-item">
       <div class="post-title"> {{ post.title }}</div>
       <div>{{ post.body }}</div>
     </div>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
   </div>
 </template>
 
 <script lang="ts">
 import store from '@/store';
 import { defineComponent } from 'vue';
-// import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 export default defineComponent({
   name: 'PostsView',
@@ -25,15 +22,12 @@ export default defineComponent({
   methods: {
     init() {
       store.dispatch("setPosts");
-      store.dispatch("setUser");
+      // store.dispatch("setUser");
     }
   },
   mounted() {
     this.init();
   }
-  // components: {
-  //   HelloWorld,
-  // },
 });
 </script>
 
