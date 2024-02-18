@@ -2,7 +2,7 @@
   <AppHeader />
   <nav>
     <router-link to="/post">Posts</router-link> |
-    <router-link to="/add">Add Post</router-link> |
+    <!-- <router-link to="/add">Add Post</router-link> | -->
     <router-link to="/profile">Profile</router-link>
   </nav>
   <router-view />
@@ -28,8 +28,8 @@ export default defineComponent({
 }
 
 nav {
-  padding: 50px;
-  margin-top: 30px
+  padding: 0 50px;
+  margin-top: 80px
 }
 
 nav a {

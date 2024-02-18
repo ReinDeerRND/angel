@@ -1,19 +1,33 @@
 <template>
   <div class="home">
     <h2> POSTS</h2>
-    <div v-for="post in filteredPosts" :key="post.id" class="post-item">
-      <div class="post-title"> {{ post.title }}</div>
-      <div>{{ post.body }}</div>
-    </div>
+    <v-expansion-panels class="add-post">
+      <v-expansion-panel>
+        <v-expansion-panel-title>Add new post</v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <AddPost @add="addPost" />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+    <h3> List of Posts</h3>
+    <PostContent v-for="post in filteredPosts" :key="post.id" :post="post" />
   </div>
 </template>
 
 <script lang="ts">
 import store from '@/store';
+import AddPost from '../components/AddPost.vue';
+import PostContent from '../components/PostContent.vue';
 import { defineComponent } from 'vue';
+import { Post } from '@/models/Post';
 
 export default defineComponent({
   name: 'PostsView',
+  components: {
+    AddPost,
+    PostContent
+  },
+
   computed: {
     filteredPosts() {
       return store.state.posts;
@@ -23,6 +37,9 @@ export default defineComponent({
     init() {
       store.dispatch("setPosts");
       // store.dispatch("setUser");
+    },
+    addPost(post: Partial<Post>) {
+      console.log(post);
     }
   },
   mounted() {
@@ -32,6 +49,14 @@ export default defineComponent({
 </script>
 
 <style>
+.home {
+  margin: 20px;
+}
+
+.add-post {
+  margin: 10px 0;
+}
+
 button {
   margin-bottom: 15px;
 }
