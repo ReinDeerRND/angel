@@ -2,7 +2,7 @@
   <AppHeader />
   <nav>
     <router-link to="/post">Posts</router-link> |
-    <!-- <router-link to="/add">Add Post</router-link> | -->
+    <router-link to="/users">Users</router-link> |
     <router-link to="/profile">Profile</router-link>
   </nav>
   <router-view />
@@ -11,10 +11,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import AppHeader from './components/AppHeader.vue'
+import store from './store';
 
 export default defineComponent({
   components: {
     AppHeader
+  },
+  mounted() {
+    store.dispatch("setUsers");
   }
 })
 </script>
@@ -29,12 +33,15 @@ export default defineComponent({
 
 nav {
   padding: 0 50px;
-  margin-top: 80px
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
 }
 
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  padding: 0 10px;
 }
 
 nav a.router-link-exact-active {

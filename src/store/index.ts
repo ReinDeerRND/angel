@@ -1,5 +1,6 @@
 import { NewPost, Post } from "@/models/Post";
 import { User } from "@/models/User";
+import axios from "axios";
 import { createStore } from "vuex";
 
 interface AppState {
@@ -14,18 +15,22 @@ export default createStore<AppState>({
     profile: null,
   },
   getters: {
-    getTodoById: (state) => (id: number) => {
-      return state.posts.find((todo) => todo.id === id);
+    getPostById: (state) => (id: number) => {
+      return state.posts.find((post) => post.id === id);
+    },
+    getUserById: (state) => (id: number) => {
+      return state.users.find((user) => user.id === id);
     },
   },
   mutations: {
-    fetchPosts(state) {
-      fetch("https://jsonplaceholder.typicode.com/posts/")
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.slice(0, 10));
-          state.posts.push(...data.slice(0, 10));
-        });
+    async fetchPosts(state) {
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/posts"
+      );
+      const chosenPosts: Post[] = response.data.filter(
+        (_: Post, index: number) => index % 3 === 0
+      );
+      state.posts.push(...chosenPosts);
     },
     addNewPost(state, payload: NewPost) {
       const id = state.posts[state.posts.length - 1].id + 1;
@@ -36,23 +41,21 @@ export default createStore<AppState>({
       };
       state.posts = [...state.posts, addedPost];
     },
-    getUsers(state){
-      fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((data) => {
-        state.users.push(...data);
-        console.log(state);
-        state.profile = state.users[0];
-      });
-    }
+    async getUsers(state) {
+      const response = await axios.get(
+        "https://jsonplaceholder.typicode.com/users"
+      );
+      state.users.push(...response.data);
+      state.profile = state.users[0];
+    },
   },
   actions: {
     setPosts({ commit }) {
       commit("fetchPosts");
     },
-    setUser({commit}){
-      commit("getUsers")
-    }
+    setUsers({ commit }) {
+      commit("getUsers");
+    },
   },
   // strict: true,
   // modules: {

@@ -18,4 +18,7 @@ const vuetify = createVuetify({
   },
 });
 
-createApp(App).use(store).use(router).use(vuetify).mount("#app");
+const app = createApp(App);
+// регистрация компонента глобально 
+// app.component(component.name, component)
+app.use(store).use(router).use(vuetify).mount("#app");

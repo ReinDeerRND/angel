@@ -1,6 +1,5 @@
 <template>
   <div class="about">
-    <h1>New Post</h1>
     <v-form v-model="valid" class="form">
       <div class="form-field">
         <v-text-field variant="solo" v-model="title" label="Title" required hide-details></v-text-field>
@@ -61,26 +60,23 @@ export default defineComponent({
       this.$emit("add", newPost);
       this.title = '';
       this.postText = '';
-
     }
-
-
   }
 })
 </script>
 
 <style>
 .about {
-  padding: 20px;
+  padding: 5px 0;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
+  margin: 15px 0;
 }
 
 .form-field {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 </style>

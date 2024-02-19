@@ -3,13 +3,22 @@
     <h2> POSTS</h2>
     <v-expansion-panels class="add-post">
       <v-expansion-panel>
-        <v-expansion-panel-title>Add new post</v-expansion-panel-title>
+        <v-expansion-panel-title>
+          <h3>Add new post</h3>
+        </v-expansion-panel-title>
         <v-expansion-panel-text>
           <AddPost @add="addPost" />
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-    <h3> List of Posts</h3>
+    <div class="sort-container">
+      <h3> List of Posts</h3>
+      <div class="selest-sort">
+        <v-select variant="underlined" density="comfortable" label="Sort" :items="sortItems" item-title="title"
+          item-value="value" @update:model-value="changeSort">
+        </v-select>
+      </div>
+    </div>
     <PostContent v-for="post in filteredPosts" :key="post.id" :post="post" />
   </div>
 </template>
@@ -19,7 +28,18 @@ import store from '@/store';
 import AddPost from '../components/AddPost.vue';
 import PostContent from '../components/PostContent.vue';
 import { defineComponent } from 'vue';
-import { Post } from '@/models/Post';
+import { AuthoredPost, Post } from '@/models/Post';
+import { SortType } from '@/models/Sort';
+import { sortByTitle, sortByBody, sortByIser, sortByIndex } from '../utils/sort'
+import { User } from '@/models/User';
+
+interface State {
+  sortItems: Array<{
+    title: string,
+    value: SortType,
+  }>,
+  sortIndicator: SortType,
+}
 
 export default defineComponent({
   name: 'PostsView',
@@ -27,10 +47,47 @@ export default defineComponent({
     AddPost,
     PostContent
   },
+  data(): State {
+    return {
+      sortItems: [{
+        title: 'By Alphabet in Title',
+        value: SortType.AlphabetTitle,
+      }, {
+        title: 'By Alphabet in Text',
+        value: SortType.AlphabetText,
+      },
+      {
+        title: 'By Author',
+        value: SortType.Author,
+      },
+      {
+        title: 'By Date',
+        value: SortType.Date,
+      }
+      ],
+      sortIndicator: SortType.Default,
 
+    }
+  },
   computed: {
-    filteredPosts() {
-      return store.state.posts;
+    filteredPosts(): AuthoredPost[] {
+      const users: User[] = store.state.users;
+      const posts = store.state.posts.map(post => {
+        const author = users.find(item => item.id === post.userId);
+        return { ...post, author: author ? author.username : "Unknown author" }
+      })
+      switch (this.sortIndicator) {
+        case SortType.AlphabetTitle:
+          return posts.sort(sortByTitle);
+        case SortType.AlphabetText:
+          return posts.sort(sortByBody);
+        case SortType.Author:
+          return posts.sort(sortByIser);
+        case SortType.Date:
+          return posts.sort(sortByIndex);
+        default:
+          return posts;
+      }
     }
   },
   methods: {
@@ -40,6 +97,9 @@ export default defineComponent({
     },
     addPost(post: Partial<Post>) {
       console.log(post);
+    },
+    changeSort(event: SortType) {
+      this.sortIndicator = event;
     }
   },
   mounted() {
@@ -52,24 +112,17 @@ export default defineComponent({
 .home {
   margin: 20px;
 }
-
 .add-post {
   margin: 10px 0;
 }
-
-button {
-  margin-bottom: 15px;
+.sort-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
 }
-
-.post-item {
-  margin-bottom: 15px;
-  border: 1px solid rgb(179, 179, 179);
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.post-title {
-  margin-bottom: 5px;
-  font-weight: bold;
+.selest-sort {
+  max-width: 40%;
+  width: 300px;
 }
 </style>
