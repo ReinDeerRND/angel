@@ -55,11 +55,14 @@ export default createStore<AppState>({
     setUsers({ commit }) {
       commit("getUsers");
     },
-    setUserProfile({ state }, userId) {
+    setUserProfile({ state }, userId: number) {
       const user = state.users.find((u) => u.id === userId);
       if (user) {
         state.profile = { ...user };
       }
+    },
+    addNewUser({ state }, user: User) {
+      state.users.push(user);
     },
   },
   // strict: true,

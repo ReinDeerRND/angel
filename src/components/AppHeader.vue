@@ -8,9 +8,7 @@
             <v-app-bar-title>Angel Messanger</v-app-bar-title>
             <template v-slot:append>
                 <v-icon size="large" color="red" icon="mdi-heart"></v-icon>
-                <div v-if="account">{{ account }} </div>
-                <div v-else>Sign in </div>
-
+                <div v-if="account" class="account-container"> {{ account }} </div>
             </template>
         </v-app-bar>
     </v-layout>
@@ -30,3 +28,8 @@ export default defineComponent({
 })
 </script>
 
+<style>
+.account-container {
+    margin-left: 10px;
+}
+</style>
