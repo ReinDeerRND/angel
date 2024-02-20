@@ -4,10 +4,8 @@
         <div class="post-body">
             <div class="post-content">{{ post.body }}</div>
             <div class="buttons-block">
-                <v-btn @click="removePost">
-                    Remove
-                </v-btn>
-                <v-dialog width="1000" >
+                <v-btn @click="removePost"> Remove </v-btn>
+                <v-dialog width="1000">
                     <template v-slot:activator="{ props }">
                         <v-btn v-bind="props" text="Details" style="margin-left: 15px;"> </v-btn>
                     </template>
@@ -15,7 +13,7 @@
                         <v-card title="Post">
                             <v-card-text>
                                 <div class="post-title"> {{ post.title }}</div>
-                                <div >{{ post.body }}</div>
+                                <div>{{ post.body }}</div>
                                 <div v-if="user" class="author-info">
                                     <div> Information about author</div>
                                     <div class="post-title"> {{ user.username }}</div>
@@ -69,24 +67,30 @@ export default defineComponent({
     border-radius: 5px;
     padding: 10px 15px;
 }
+
 .post-title {
     margin-bottom: 5px;
     font-weight: bold;
 }
+
 .post-body {
     display: flex;
     justify-content: space-between;
     padding-right: 15px;
 }
+
 .post-content {
     padding-right: 15px;
 }
-.buttons-block{
+
+.buttons-block {
     display: flex;
 }
+
 .post-author {
     font-style: italic;
 }
+
 .author-info {
     margin-top: 20px;
 }

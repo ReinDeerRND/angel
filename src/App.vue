@@ -1,6 +1,6 @@
 <template>
-  <AppHeader />
-  <nav>
+  <nav v-if="isAuth">
+    <AppHeader />
     <router-link to="/post">Posts</router-link> |
     <router-link to="/users">Users</router-link> |
     <router-link to="/profile">Profile</router-link>
@@ -17,6 +17,11 @@ export default defineComponent({
   components: {
     AppHeader
   },
+  computed: {
+    isAuth(): boolean {
+      return !!store.state.profile;
+    }
+  },
   mounted() {
     store.dispatch("setUsers");
   }
@@ -29,9 +34,12 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  padding: 0;
+  margin: 0;
 }
 
 nav {
+  width: 100%;
   padding: 0 50px;
   margin-top: 80px;
   display: flex;

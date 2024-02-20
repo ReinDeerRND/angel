@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="posts">
     <h2> POSTS</h2>
     <v-expansion-panels class="add-post">
       <v-expansion-panel>
@@ -109,7 +109,7 @@ export default defineComponent({
 </script>
 
 <style>
-.home {
+.posts {
   margin: 20px;
 }
 .add-post {

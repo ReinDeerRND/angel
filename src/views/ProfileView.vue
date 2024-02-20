@@ -1,3 +1,3 @@
 <template>
-    <p>Profile page</p>
+    <h2>PROFILE</h2>
 </template>

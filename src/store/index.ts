@@ -46,7 +46,6 @@ export default createStore<AppState>({
         "https://jsonplaceholder.typicode.com/users"
       );
       state.users.push(...response.data);
-      state.profile = state.users[0];
     },
   },
   actions: {
@@ -55,6 +54,12 @@ export default createStore<AppState>({
     },
     setUsers({ commit }) {
       commit("getUsers");
+    },
+    setUserProfile({ state }, userId) {
+      const user = state.users.find((u) => u.id === userId);
+      if (user) {
+        state.profile = { ...user };
+      }
     },
   },
   // strict: true,
