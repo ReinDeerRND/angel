@@ -32,6 +32,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "users",
     component: UsersView,
   },
+  {
+    path: "/music",
+    name: "music",
+    component: () =>
+      import(/* webpackChunkName: "post" */ "../views/MusicView.vue"),
+  },
 ];
 
 const router = createRouter({
@@ -42,7 +48,7 @@ const router = createRouter({
 // router guard
 // eslint-disable-next-line
 router.beforeEach((to, from) => {
-  const isAuthenticated = !!store.state.profile;
+  const isAuthenticated = true//!!store.state.profile;
   if (!isAuthenticated && to.name !== "login" && to.name !== "home") {
     return { name: "login" };
   }

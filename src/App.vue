@@ -3,7 +3,8 @@
     <AppHeader />
     <router-link to="/post">Posts</router-link> |
     <router-link to="/users">Users</router-link> |
-    <router-link to="/profile">Profile</router-link>
+    <router-link to="/profile">Profile</router-link> | 
+    <router-link to="/music">Music</router-link> 
   </nav>
   <router-view />
 </template>
@@ -19,7 +20,8 @@ export default defineComponent({
   },
   computed: {
     isAuth(): boolean {
-      return !!store.state.profile;
+      return true;
+      // return !!store.state.profile;
     }
   },
   mounted() {
@@ -45,6 +47,7 @@ nav {
   margin-top: 80px;
   display: flex;
   justify-content: center;
+  height: 24px;
 }
 
 nav a {

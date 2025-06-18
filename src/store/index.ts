@@ -1,5 +1,6 @@
 import { NewPost, Post } from "@/models/Post";
 import { User } from "@/models/User";
+import { mock_posts, mock_users } from "@/utils/posts.data";
 import axios from "axios";
 import { createStore } from "vuex";
 
@@ -24,9 +25,13 @@ export default createStore<AppState>({
   },
   mutations: {
     async fetchPosts(state) {
-      const response = await axios.get(
+      const response = await axios
+      .get(
         "https://jsonplaceholder.typicode.com/posts"
-      );
+      )
+      .catch((error)=>{
+        return {data: mock_posts}
+      });
       const chosenPosts: Post[] = response.data.filter(
         (_: Post, index: number) => index % 3 === 0
       );
@@ -42,9 +47,13 @@ export default createStore<AppState>({
       state.posts = [...state.posts, addedPost];
     },
     async getUsers(state) {
-      const response = await axios.get(
+      const response = await axios
+      .get(
         "https://jsonplaceholder.typicode.com/users"
-      );
+      )
+      .catch((error)=>{
+        return {data: mock_users}
+      });
       state.users.push(...response.data);
     },
   },

@@ -9,6 +9,7 @@ npm install
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+serve on node version 18.20.3, npm 10.7.0
 ```
 
 ### Compiles and minifies for production

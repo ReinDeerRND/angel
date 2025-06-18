@@ -44,7 +44,7 @@ export default defineComponent({
 <style>
 .home {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 105px);
     --index: calc(1vw + 1vh);
     --transition: 1.5s cubic-bezier(0.05, 0.5, 0, 1);
     background-color: purple;
@@ -57,7 +57,7 @@ export default defineComponent({
 }
 
 .layers__container {
-    height: 100vh;
+    height: calc(100vh - 105px);
     transform-style: preserve-3d;
     transform: rotateX(var(--move-y)) rotateY(var(--move-x));
     will-change: transform;
